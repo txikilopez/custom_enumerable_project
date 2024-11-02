@@ -76,7 +76,13 @@ module Enumerable
     end
   end
 
-  def my_inject
+  def my_inject(seed = 0)
+    if block_given?
+      base = seed
+      self.my_each {|elem| base = yield(base, elem)}
+      base
+    end
+
   end
 
   #last end
@@ -97,4 +103,3 @@ class Array
     self
   end
 end
-
