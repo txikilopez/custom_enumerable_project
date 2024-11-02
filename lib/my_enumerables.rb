@@ -42,10 +42,44 @@ module Enumerable
     return check_arr.length > 0
   end
 
+  def my_none?
+    if block_given?
+      self.my_each do |n|
+        return false if yield(n)
+        # yield(n) ? false : true
+      end
+    elsif self.length == 0
+        return true
+    else
+      return (self.my_select {|arr_elem| arr_elem.nil?}.length > 0 ) ? true : false
+    end
+    true
+  end
 
+  def my_count
+    if block_given?
+      aux_output = []
+      aux_output = self.my_select {|elem| yield(elem)}
+      aux_output.length
+    else
+      self.length
+    end
+  end
 
+  def my_map
+    if block_given?
+      output_arr = []
+      self.my_each {|elem| output_arr.push(yield(elem))}
+      output_arr
+    else
+      self
+    end
+  end
 
-  #final end
+  def my_inject
+  end
+
+  #last end
 end
 
 # You will first have to define my_each
